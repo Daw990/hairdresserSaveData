@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.min.css" >
+
+    <title>Nożyce w Dłoni: wybierz datę</title>
+</head>
+<body>
+<div th:insert="webStatic/menu.html :: nav"></div>
+
+<div class="container">
+
+    <div class="main-box">
+    <form th:action="@{/user/make_visit_date(date=${date}, newClient=false)}">
+        <input type="hidden" name="idPriceList" th:field="${priceList.idPriceList}">
+
+        <h2>Wybierz datę:</h2>
+        <div class="row center-box">
+
+                <button type="button" id="toggleDatePicker" class="input-group-text"><i class="fa fa-calendar-alt"></i></button>
+                <input type="text" id="datePicker" name="date" class="form-controll" required="required">
+
+            <button type="submit" class="btn-sm btn-info">sprawdz dostępne godziny</button>
+        </div>
+    </form>
+
+        <form th:if="${param.date}"
+              th:action="@{/user/save_visit(date=${param.date}, idPriceList=${param.idPriceList}, newClient=${param.newClient})}"
+              th:method="POST">
+
+            <input type="hidden" th:field="${priceList.idPriceList}">
+            <div th:if="${!hours.isEmpty()}">
+
+                <h2 class="space-input">Wybierz godzinę:</h2>
+                    <div class="row center-box">
+
+                        <select class="center-box form-control col-3" placeholder="godzina" required="required"
+                                th:field="${visit.visitTime}">
+                            <option th:each="hour: ${hours}" th:value="${hour}" th:text="${hour}" name="time">
+                            </option>
+                        </select>
+
+                        <a sec:authorize="hasAuthority('ADMIN')" th:unless="${param.clientForm}"
+                           th:href="@{/user/make_visit_date(idPriceList=${priceList.idPriceList},date=${param.date},newClient=true,clientForm=true)}"
+                       class="btn btn-info btn-space">
+                        Dodaj klienta
+                        </a>
+                    </div>
+
+            <div th:if="${param.clientForm}">
+
+                <h2 class="space-input">Podaj dane klienta:</h2>
+                <h6>(wypełnij dane aby zapisać klienta, kliknij powrót aby zapisać siebie)</h6>
+
+                <a class="btn btn-danger space-margin-bottom" href="javascript:history.back()">Powrót</a>
+
+                <div class="form-group">
+                    <input type="text" required="required" name="firstName"
+                           class="form-control" placeholder="Imię">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="secondName"
+                           class="form-control" placeholder="Nazwisko">
+                </div>
+
+                <div class="form-group">
+                    <input type="tel" required="required" name="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9}{3}"
+                           class="form-control" placeholder="Numer kontaktowy">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="description"
+                           class="form-control" placeholder="Dodatkowe informacje">
+                </div>
+
+            </div>
+                <div class="center-box space-top">
+                    <button type="submit" class="btn-info">Zapisz!</button>
+                </div>
+            </div>
+
+            <div th:if="${hours.isEmpty()}">
+                <hr>
+                Brak wolnych terminów <a href="javascript:history.back()">Powrót</a>
+            </div>
+
+        </form>
+</div>
+</div>
+
+<div th:insert="webStatic/menu.html :: footer"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha512-eUQ9hGdLjBjY3F41CScH3UX+4JDSI9zXeroz7hJ+RteoCaY+GP/LDoM8AO+Pt+DRFw3nXqsjh9Zsts8hnYv8/A==" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/js/jquery.datetimepicker.full.min.js"></script>
+<script>
+
+    let paramDate = Date();
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if(urlParams.has('date')) {
+
+        paramDate = urlParams.get('date');
+    }
+
+
+    $.datetimepicker.setLocale('pl');
+
+    $('#datePicker').datetimepicker({
+        timepicker: false,
+        datePicker: true,
+        format: 'Y-m-d',
+        value: paramDate,
+        disabledWeekDays:[0,6],
+        mask: true
+
+    })
+    $('#toggleDatePicker').on('click', function(){
+        $('#datePicker').focus()
+    })
+
+</script>
+
+</body>
+</html>

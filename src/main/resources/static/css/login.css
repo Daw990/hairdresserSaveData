@@ -1,0 +1,61 @@
+.login-form {
+    width: 450px;
+    margin: 20px auto;
+  	font-size: 15px;
+  	border-radius: 20px;
+
+}
+.login-form form {
+    margin-bottom: 5px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0.5, 1, 1, 2);
+    padding: 15px;
+    background-color: #b3b3ff;
+}
+
+.form-control{
+    min-height: 38px;
+}
+
+.spacePassword{
+    margin-bottom: 5px;
+}
+
+.login-form form .form-group input {
+    border-radius: 27px;
+    border:1px solid #ccc;
+}
+
+.login-form form .form-group select {
+    border-radius: 27px;
+    border:1px solid #ccc;
+}
+
+.logout-info{
+        text-align: center;
+        border-style: solid;
+        border-color: red;
+        background-color: #f57d7d;
+        opacity: 0.6;
+        color: black;
+}
+
+.success-info{
+        text-align: center;
+        border-style: solid;
+        border-color: green;
+        background-color: #b3ffb3;
+        opacity: 0.6;
+        color: black;
+}
+
+.invalid-login{
+    text-align: center;
+    border-style: solid;
+    border-color: red;
+    background-color: #f57d7d;
+    opacity: 0.6;
+    margin-bottom: 20px;
+    color: black;
+}
+

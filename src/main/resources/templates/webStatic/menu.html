@@ -1,0 +1,80 @@
+<nav class="navbar navbar-expand-md navbar-light">
+    <a class="navbar-brand" th:href="@{/}">
+        <img src="/images/logo2.png" style="width:150px;">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}">O nas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/price_list}">Cennik</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/contact}">Kontakt</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto flex-nowrap" sec:authorize="!isAuthenticated()">
+            <li class="nav-item">
+                <a href="/sign_up" class="nav-link">Rejestracja</a>
+            </li>
+            <li class="nav-item">
+                <a href="/login" class="nav-link">Zaloguj</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto flex-nowrap" sec:authorize="isAuthenticated()">
+            <li class="nav-item">
+                <a th:href="@{/price_list}" class="nav-link">Zaplanuj wizytę</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false" sec:authentication="name">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="@{/user/user_panel}">Panel Użytkownika</a>
+                    <a class="dropdown-item" th:href="@{/user/my_visits}">Panel Wizyt</a>
+                    <a class="dropdown-item" th:href="@{/price_list}" sec:authorize="hasAuthority('BOSS')">Edytuj cennik</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/logout}">wyloguj</a>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<footer>
+    <div class="row">
+
+        <div class="col-md-4">
+        <img src="/images/logo2.png" style="max-width:200px;">
+        </div>
+
+        <div class="col-md-4">
+            <ul style="text-align: center;">
+                <b>Godziny otwarcia:</b>
+                <li>Pn - Pt: 8.00 - 16.00</li>
+                <li>Sb Nieczynne</li>
+                <li>Nd Nieczynne</li>
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <ul>
+                <b>Linki</b>
+                <li><a th:href="@{/}">O nas</a></li>
+                <li><a th:href="@{/price_list}">Cennik</a></li>
+                <li><a th:href="@{/contact}">Kontakt</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>

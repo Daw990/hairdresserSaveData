@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <title>Nożyce w Dłoni: Strona główna</title>
+</head>
+<body>
+<div th:insert="webStatic/menu.html :: nav"></div>
+
+<div class="container">
+
+    <div class="main-box-bigger">
+        <h3>Pracownicy</h3>
+
+        <div th:if="${usersAdmin.isEmpty()}">
+            Brak pracowników
+        </div>
+
+        <table class="table table-sm table-dark" th:unless="${usersAdmin.isEmpty()}">
+            <thead>
+            <tr>
+                <td><b>Imię i Nazwisko</b></td>
+                <td><b>E-mail</b></td>
+                <td><b>Telefon</b></td>
+                <td><b>Zarządzaj uprawnieniami</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${usersAdmin}">
+
+                <td th:text="${user.userData.firstName} + ' ' + ${user.userData.secondName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.userData.phoneNumber}"></td>
+                <td>
+                    <a class="btn btn-danger btn-sm" th:href="@{/user/delete_grants(idUser=${user.idUser})}"
+                       onclick="if (!(confirm('Jesteś pewny/a że chcesz usunąć prawa pracownicze?'))) return false">
+                        Usuń
+                    </a>
+                </td>
+            </tbody>
+        </table>
+        <h3>Nadaj Uprawnienia Pracownika</h3>
+        <hr>
+        <div class="row center-box">
+
+            <div class="form-inline">
+                <input type="text" required="required" id="name"
+                       class="form-control" placeholder="Podaj imię">
+                <a class="btn btn-info btn-space" href="" onClick="this.href='give_grants?name='+document.getElementById('name').value">
+                    Szukaj wsród użytkowników
+                </a>
+            </div>
+            <div th:if="${param.name}">
+            <table class="table table-sm table-dark" th:unless="${usersToGetGrants.isEmpty()}">
+                <thead>
+                <tr>
+                    <td><b>Imię i Nazwisko</b></td>
+                    <td><b>E-mail</b></td>
+                    <td><b>Telefon</b></td>
+                    <td><b>Zarządzaj uprawnieniami</b></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${usersToGetGrants}">
+
+                    <td th:text="${user.userData.firstName} + ' ' + ${user.userData.secondName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.userData.phoneNumber}"></td>
+                    <td>
+                        <a class="btn btn-info btn-sm" th:href="@{/user/give_grants_save(idUser=${user.idUser})}">
+                            Nadaj uprawnienia
+                        </a>
+                    </td>
+                </tbody>
+            </table>
+
+                <div th:if="${usersToGetGrants.isEmpty()}">
+                    Nie znaleziono użytkownika o podanym imieniu
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:insert="webStatic/menu.html :: footer"></div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

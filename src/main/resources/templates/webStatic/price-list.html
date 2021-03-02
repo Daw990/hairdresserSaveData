@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <link rel="stylesheet" type="text/css" href="/css/login.css" >
+    <title>Nożyce w Dłoni: Strona główna</title>
+
+</head>
+<body>
+
+<div th:insert="webStatic/menu.html :: nav"></div>
+
+<div class="container">
+
+    <h2>Cennik</h2>
+
+    <h6 sec:authorize="hasAuthority('USER')">(kliknij "wybierz" aby zaplanować wizytę)</h6>
+    <a th:href="@{/user/price_list_add}"
+       class="btn btn-primary btn-sm mb-3" sec:authorize="hasAuthority('BOSS')">
+        Dodaj Usługę
+    </a>
+
+    <br>
+    <table class="table table-dark table-sm">
+        <thead class="thead-dark">
+        <tr>
+            <td><b>Usługa</b></td>
+            <td><b>Czas trwania (min)</b></td>
+            <td><b>Cena (zł)</b></td>
+        </tr>
+        </thead>
+        <tbody>
+
+        <td class="table-warning table-categories" colspan="4"><b>Mężczyźni</b></td>
+
+        <tr th:each="service1 : ${listMan}">
+            <td th:text="${service1.name}"></td>
+            <td th:text="${service1.time}"></td>
+            <td th:text="${service1.price}"></td>
+
+            <td sec:authorize="hasAuthority('USER')">
+
+                <a th:href="@{/user/price_list_edit(id=${service1.idPriceList})}"
+                   class="btn btn-info btn-sm" sec:authorize="hasAuthority('BOSS')">
+                    Edytuj
+                </a>
+                <a th:href="@{/user/price_list_delete(id=${service1.idPriceList})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Jesteś pewny/a że chcesz usunąć?'))) return false" sec:authorize="hasAuthority('BOSS')">
+                    Usuń
+                </a>
+
+                <a th:href="@{/user/make_visit(idPriceList=${service1.idPriceList})}"
+                   class="btn btn-info btn-sm">
+                    Wybierz
+                </a>
+            </td>
+        </tr>
+
+        <td class="table-warning table-categories" colspan="4"><b>Kobiety</b></td>
+
+        <tr th:each="service2 : ${listWoman}">
+            <td th:text="${service2.name}"></td>
+            <td th:text="${service2.time}"></td>
+            <td th:text="${service2.price}"></td>
+
+            <td sec:authorize="hasAuthority('USER')">
+
+                <a th:href="@{/user/price_list_edit(id=${service2.idPriceList})}"
+                   class="btn btn-info btn-sm" sec:authorize="hasAuthority('BOSS')">
+                    Edytuj
+                </a>
+                <a th:href="@{/user/price_list_delete(id=${service2.idPriceList})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Jesteś pewny/a że chcesz usunąć?'))) return false" sec:authorize="hasAuthority('BOSS')">
+                    Usuń
+                </a>
+                <a th:href="@{/user/make_visit(idPriceList=${service2.idPriceList})}"
+                   class="btn btn-info btn-sm">
+                    Wybierz
+                </a>
+            </td>
+        </tr>
+
+        <td class="table-warning table-categories" colspan="4"><b>Koloryzacja</b></td>
+
+        <tr th:each="service3 : ${listColorization}">
+            <td th:text="${service3.name}"></td>
+            <td th:text="${service3.time}"></td>
+            <td th:text="${service3.price}"></td>
+
+            <td sec:authorize="hasAuthority('USER')">
+
+                <a th:href="@{/user/price_list_edit(id=${service3.idPriceList})}"
+                   class="btn btn-info btn-sm" sec:authorize="hasAuthority('BOSS')">
+                    Edytuj
+                </a>
+                <a th:href="@{/user/price_list_delete(id=${service3.idPriceList})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Jesteś pewny/a że chcesz usunąć?'))) return false" sec:authorize="hasAuthority('BOSS')">
+                    Usuń
+                </a>
+                <a th:href="@{/user/make_visit(idPriceList=${service3.idPriceList})}"
+                   class="btn btn-info btn-sm">
+                    Wybierz
+                </a>
+            </td>
+        </tr>
+
+        <td class="table-warning table-categories" colspan="4"><b>Inne zabiegi</b></td>
+
+        <tr th:each="service4 : ${otherServices}">
+            <td th:text="${service4.name}"></td>
+            <td th:text="${service4.time}"></td>
+            <td th:text="${service4.price}"></td>
+
+            <td sec:authorize="hasAuthority('USER')">
+
+                <a th:href="@{/user/price_list_edit(id=${service4.idPriceList})}"
+                   class="btn btn-info btn-sm" sec:authorize="hasAuthority('BOSS')">
+                    Edytuj
+                </a>
+                <a th:href="@{/user/price_list_delete(id=${service4.idPriceList})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if (!(confirm('Jesteś pewny/a że chcesz usunąć?'))) return false" sec:authorize="hasAuthority('BOSS')">
+                    Usuń
+                </a>
+                <a th:href="@{/user/make_visit(idPriceList=${service4.idPriceList})}"
+                   class="btn btn-info btn-sm">
+                    Wybierz
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:insert="webStatic/menu.html :: footer"></div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

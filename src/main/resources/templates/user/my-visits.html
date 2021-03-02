@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.min.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <title>Nożyce w Dłoni: Wizyty</title>
+</head>
+<body>
+
+    <div th:insert="webStatic/menu.html :: nav"></div>
+
+    <div class="container">
+    <h3>Moje wizyty</h3>
+    <hr>
+        <div th:unless="${userVisitList.isEmpty()}">
+        <table class="table table-sm table-dark">
+            <thead>
+            <tr>
+                <td><b>Usługa</b></td>
+                <td><b>Data</b></td>
+                <td><b>Godzina</b></td>
+                <td><b>Czas trwania</b></td>
+                <td><b>Cena</b></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="visit : ${userVisitList}">
+
+                <td th:text="${visit.serviceName}"></td>
+                <td th:text="${visit.visitDate}"></td>
+                <td th:text="${visit.visitTime}"></td>
+                <td th:text="${visit.serviceTime} + 'min'"></td>
+                <td th:text="${visit.serviceCost} + 'zł'"></td>
+                <td>
+                    <a th:href="@{/user/visit_delete(id=${visit.idVisit})}" class="btn btn-danger btn-sm"
+                       th:if="${visit.canDelete == true}"
+                       onclick="if (!(confirm('Jesteś pewny/a że chcesz usunąć?'))) return false">
+                        Usuń
+                    </a>
+                    <span th:if="${visit.canDelete == false}" style="font-size: xx-small"> Wizyta sie odbyła bądź pozostał 1 dzień do rozpoczęcia </span>
+
+                </td>
+            </tbody>
+        </table>
+        </div>
+        <div th:if="${userVisitList.isEmpty()}" class="txt-center">
+            nie masz jeszcze żadnych wizyt
+            <a href="/price_list" class="btn btn-info btn-space">zapisz się!</a>
+
+        </div>
+
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <div class="row">
+                <div class="form-inline">
+                    <h2 class="form-group">Zarządzaj wizytami: </h2>
+                </div>
+            </div>
+
+                <form th:action="@{/user/my_visits(date=${date})}" class="form-inline space-margin-bottom">
+
+                        <div class="form-group">
+                            <button type="button" id="toggleDatePicker" class="input-group-text"><i class="fa fa-calendar-alt"></i></button>
+
+                            <input type="text" name="date" id="datePicker" class="form-controll btn-space"
+                                   required="required">
+                        </div>
+
+                        <button type="submit" class="btn btn-info btn-space form-group">
+                            Sprawdź</button>
+                        <a th:href="@{/price_list}" class="btn btn-info btn-space">Stwórz nową wizytę</a>
+                </form>
+
+            <div th:if="${param.date}">
+                <div th:unless="${selectedVisits.isEmpty()}">
+            <table class="table table-dark table-sm">
+                <thead>
+                <tr>
+                    <td><b>Usługa</b></td>
+                    <td><b>Imię i Nazwisko</b></td>
+                    <td><b>Data</b></td>
+                    <td><b>Godzina</b></td>
+                    <td><b>Czas trwania</b></td>
+                    <td><b>informacje</b></td>
+                    <td><b>Cena</b></td>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="visit : ${selectedVisits}">
+
+                    <td th:text="${visit.serviceName}"></td>
+                    <td th:text="${visit.user.userData.firstName} + ' ' + ${visit.user.userData.secondName}"></td>
+                    <td th:text="${visit.visitDate}"></td>
+                    <td th:text="${visit.visitTime}"></td>
+                    <td th:text="${visit.serviceTime} + 'min'"></td>
+                    <td th:text="${visit.description}"></td>
+                    <td th:text="${visit.serviceCost} + 'zł'"></td>
+                    <td>
+                        <a th:href="@{/user/visit_delete(id=${visit.idVisit},date=${param.get('date')})}" class="btn btn-danger btn-sm"
+                           onclick="if (!(confirm('Jesteś pewny/a że chcesz usunąć?'))) return false">
+                            Usuń
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+                <div th:if="${selectedVisits.isEmpty()}">Brak wizyt wybranego dnia</div>
+            </div>
+        </div>
+
+</div>
+
+        <div th:insert="webStatic/menu.html :: footer"></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="/js/jquery.datetimepicker.full.min.js"></script>
+    <script>
+
+        let paramDate = Date();
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if(urlParams.has('date')) {
+
+            paramDate = urlParams.get('date');
+        }
+
+
+        $.datetimepicker.setLocale('pl');
+
+        $('#datePicker').datetimepicker({
+            timepicker: false,
+            datePicker: true,
+            format: 'Y-m-d',
+            value: paramDate,
+            disabledWeekDays:[0,6],
+            mask: true
+
+        })
+        $('#toggleDatePicker').on('click', function(){
+            $('#datePicker').focus()
+        })
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <script src="/js/pwStrength.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <link rel="stylesheet" type="text/css" href="/css/login.css" >
+    <link rel="stylesheet" type="text/css" href="/css/password.validation.css" >
+
+    <title>Nożyce w Dłoni: Strona główna</title>
+
+</head>
+<body>
+
+<div th:insert="webStatic/menu.html :: nav"></div>
+
+    <div class="container">
+
+        <div class="login-form">
+
+            <form class="login-form" action="/sign_up" th:method="POST" role="form">
+
+                <h3>Rejestracja </h3>
+                <hr>
+
+                <div class="logout-info form-group" th:if="${param.emailError}">
+                    <div>Użytkownik o podanym adresie email już istnieje</div>
+                </div>
+
+                <div class="form-group">
+                    <input type="text" required="required" name="firstName"
+                           class="form-control" placeholder="Imię">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" required="required" name="secondName"
+                           class="form-control" placeholder="Nazwisko">
+                </div>
+
+                <div class="form-group">
+                    <input type="email" required="required" name="username"
+                           class="login-element form-control" placeholder="email">
+                </div>
+
+                <div class="form-group">
+                    <input type="tel" required="required" name="phoneNumber" pattern="[0-9]{3}-[0-9]{3}-[0-9}{3}"
+                           class="form-control" placeholder="Numer kontaktowy">
+                </div>
+
+                <div class="form-group">
+                    <div id="pwd-container">
+                        <div class="spacePassword">
+                            <input type="password" class="form-control login-element" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                   name="password" required="required" id="password" placeholder="Hasło"
+                                   title="Hasło musi posiadać conajmniej 8 znaków, duzą i małą literę oraz cyfrę">
+                        </div>
+                        <div class="pwstrength_viewport_progress"></div>
+                    </div>
+                    <div id="message">
+                        <div class="form-inline">
+                            <p id="letter" class="invalid btn-space"><b>Małe</b> litery</p>
+                            <p id="capital" class="invalid btn-space"><b>Duże</b> litery</p>
+                            <p id="number" class="invalid btn-space"><b>Cyfra</b></p>
+                            <p id="length" class="invalid btn-space">Min <b>8 znaków</b></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" required="required" id="confirm_password"
+                           class="login-element form-control" placeholder="powtórz hasło">
+                </div>
+
+                <div class="form-inline">
+                    <button type="submit" class="btn btn-info">Zarejestruj</button>
+                    <a class="ml-auto" th:href="@{/login}">Zaloguj</a>
+                </div>
+
+                <hr>
+                <a href="javascript:history.back()">Powrót</a>
+
+            </form>
+        </div>
+    </div>
+
+<div th:insert="webStatic/menu.html :: footer"></div>
+
+<script>
+    var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+
+function validatePassword(){
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Hasło nie pasuję");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+</script>
+<script>
+    jQuery(document).ready(function () {
+    "use strict";
+    var options = {};
+    options.ui = {
+        bootstrap4: true,
+        container: "#pwd-container",
+        viewports: {
+            progress: ".pwstrength_viewport_progress"
+        },
+        showVerdictsInsideProgressBar: true
+    };
+    $('#password').pwstrength(options);
+});
+</script>
+<script>
+    var myInput = document.getElementById("password");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+
+    // When the user clicks on the password field, show the message box
+    myInput.onfocus = function() {
+      document.getElementById("message").style.display = "block";
+    }
+
+    // When the user clicks outside of the password field, hide the message box
+    myInput.onblur = function() {
+      document.getElementById("message").style.display = "none";
+    }
+
+    // When the user starts to type something inside the password field
+    myInput.onkeyup = function() {
+      // Validate lowercase letters
+      var lowerCaseLetters = /[a-z]/g;
+      if(myInput.value.match(lowerCaseLetters)) {
+        letter.classList.remove("invalid");
+        letter.classList.add("valid");
+      } else {
+        letter.classList.remove("valid");
+        letter.classList.add("invalid");
+    }
+
+      // Validate capital letters
+      var upperCaseLetters = /[A-Z]/g;
+      if(myInput.value.match(upperCaseLetters)) {
+        capital.classList.remove("invalid");
+        capital.classList.add("valid");
+      } else {
+        capital.classList.remove("valid");
+        capital.classList.add("invalid");
+      }
+
+      // Validate numbers
+      var numbers = /[0-9]/g;
+      if(myInput.value.match(numbers)) {
+        number.classList.remove("invalid");
+        number.classList.add("valid");
+      } else {
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+      }
+
+      // Validate length
+      if(myInput.value.length >= 8) {
+        length.classList.remove("invalid");
+        length.classList.add("valid");
+      } else {
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+      }
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
