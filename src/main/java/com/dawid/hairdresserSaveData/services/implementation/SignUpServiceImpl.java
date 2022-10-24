@@ -15,11 +15,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class SignUpServiceImpl implements SignUpService, SecurityContext {
 
     private static final int TOKEN_LENGTH = 20;
@@ -81,8 +82,7 @@ public class SignUpServiceImpl implements SignUpService, SecurityContext {
 
         if (result.isPresent()) {
             user = result.get();
-        }
-        else {
+        } else {
             throw new RuntimeException("Did not find user id - " + id);
         }
         return user;

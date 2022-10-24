@@ -4,11 +4,11 @@ import com.dawid.hairdresserSaveData.entity.Role;
 import com.dawid.hairdresserSaveData.repository.RoleRepository;
 import com.dawid.hairdresserSaveData.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class RoleServiceImpl implements RoleService {
 
     RoleRepository roleRepository;

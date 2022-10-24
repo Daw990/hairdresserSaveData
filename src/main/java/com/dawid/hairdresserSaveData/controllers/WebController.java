@@ -1,12 +1,13 @@
 package com.dawid.hairdresserSaveData.controllers;
 
-import com.dawid.hairdresserSaveData.custom.DateAndTime;
+import com.dawid.hairdresserSaveData.component.mailBuilder.SignUpMail;
 import com.dawid.hairdresserSaveData.entity.PriceList;
 import com.dawid.hairdresserSaveData.entity.User;
 import com.dawid.hairdresserSaveData.entity.UserData;
 import com.dawid.hairdresserSaveData.repository.UserRepository;
 import com.dawid.hairdresserSaveData.services.PriceListService;
 import com.dawid.hairdresserSaveData.services.SignUpService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,27 +15,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+@AllArgsConstructor
 public class WebController {
 
     PriceListService priceListService;
     SignUpService signUpService;
     UserRepository userRepository;
-
-    @Autowired
-    public WebController(PriceListService priceListService, SignUpService signUpService,
-                         UserRepository userRepository){
-
-        this.priceListService = priceListService;
-        this.signUpService = signUpService;
-        this. userRepository = userRepository;
-    }
+    SignUpMail signUpMail;
 
     @GetMapping("/contact")
-    public String contact() {
+    public String contact() throws MessagingException {
+        //signUpMail.sendConfirmationLinkBySes("Magda9008@gmail.com", "aaa");
         return "webStatic/contact";
     }
 
@@ -45,9 +42,9 @@ public class WebController {
 
         Optional<User> optionalUser = userRepository.findByEmail(username);
 
-        if(!optionalUser.isPresent()) {
+        if(optionalUser.isEmpty()) {
             User user = User.of(username, password);
-            UserData userData = new UserData(firstName, secondName, phoneNumber, DateAndTime.getDateAndTime());
+            UserData userData = new UserData(firstName, secondName, phoneNumber, LocalDateTime.now());
             signUpService.signUpUser(user, userData);
             return "redirect:/login?signUpSuccess";
         }else
@@ -66,8 +63,7 @@ public class WebController {
     }
 
     @GetMapping(value = "/price_list")
-    public String priceList(Model model, PriceList priceList) {
-
+    public String priceList(Model model) {
         List<PriceList> listMan = priceListService.findByCategory("man");
         List<PriceList> listWoman = priceListService.findByCategory("woman");
         List<PriceList> listColorization = priceListService.findByCategory("colorization");
@@ -77,7 +73,6 @@ public class WebController {
         model.addAttribute("listWoman", listWoman);
         model.addAttribute("listColorization", listColorization);
         model.addAttribute("otherServices", listServices);
-
         return "webStatic/price-list";
     }
 

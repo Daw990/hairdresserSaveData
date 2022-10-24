@@ -1,6 +1,5 @@
 package com.dawid.hairdresserSaveData.controllers;
 
-import com.dawid.hairdresserSaveData.custom.DateAndTime;
 import com.dawid.hairdresserSaveData.entity.PriceList;
 import com.dawid.hairdresserSaveData.entity.User;
 import com.dawid.hairdresserSaveData.entity.UserData;
@@ -15,10 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +97,7 @@ public class UserVisitController {
         LocalDate localDate = LocalDate.parse(date);
         visit.setServiceName(priceList.getName());
         visit.setVisitDate(localDate);
-        visit.setVisitStartedDate(DateAndTime.getDateAndTime());
+        visit.setVisitStartedDate(LocalDateTime.now());
         visit.setDescription(description);
         visit.setServiceTime(priceList.getTime());
         visit.setServiceCost(priceList.getPrice());
@@ -111,7 +110,7 @@ public class UserVisitController {
 
         if (newClient.equals("true")) {
 
-            UserData userData = new UserData(firstName, secondName, phoneNumber, DateAndTime.getDateAndTime());
+            UserData userData = new UserData(firstName, secondName, phoneNumber, LocalDateTime.now());
             User user = new User();
             user.setUserData(userData);
             signUpService.save(user);
@@ -124,7 +123,7 @@ public class UserVisitController {
         }
         visitService.save(visit);
 
-        return "redirect:/user/user_panel";
+        return "redirect:/user/my_visits";
     }
 
     @GetMapping(value = "/my_visits")

@@ -1,7 +1,6 @@
 package com.dawid.hairdresserSaveData.services;
 
 import com.dawid.hairdresserSaveData.entity.Role;
-import com.dawid.hairdresserSaveData.entity.UserData;
 
 import java.util.Optional;
 

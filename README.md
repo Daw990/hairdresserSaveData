@@ -3,6 +3,6 @@ hairdressing salon website to manage visits and employees
 
 Application simillar and better than car-mechanic
 
-[Link to youtube how it works](https://www.youtube.com/watch?v=ifbzxDRLzcA) turn on subtitles PL
+[Link to youtube how it works](https://www.youtube.com/watch?v=ifbzxDRLzcA) turn on subittles PL
 
-My website: [http://dminfo.vot.pl/](http://dminfo.vot.pl/)
+My website: [https://dm-info.pl/](https://dm-info.pl/)

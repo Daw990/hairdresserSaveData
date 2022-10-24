@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PriceListRepository extends JpaRepository<PriceList, Long> {
 
-    List<PriceList> findByCategory(String category);
+    List<PriceList> findByCategory(String byCategory);
 }

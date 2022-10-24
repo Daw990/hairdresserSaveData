@@ -4,9 +4,7 @@ import com.dawid.hairdresserSaveData.entity.Visit;
 import com.dawid.hairdresserSaveData.repository.VisitRepository;
 import com.dawid.hairdresserSaveData.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Service
 public class VisitServiceImpl implements VisitService {
 
     private final int MINUTES_SMALLEST_PART_OF_SERVICE = 20;

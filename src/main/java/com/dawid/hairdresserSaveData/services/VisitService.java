@@ -1,7 +1,6 @@
 package com.dawid.hairdresserSaveData.services;
 
 import com.dawid.hairdresserSaveData.entity.Visit;
-import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**", "/images/**", "/js/**", "/font/**").permitAll()
-                .antMatchers("/", "/webStatic/**", "/login","/sign_up","/price_list","/confirm_email","/contact").permitAll()
+                .antMatchers("/", "/webStatic/**", "/login","/sign_up"
+                        ,"/price_list","/confirm_email","/contact","/h2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()//my login page
@@ -44,17 +45,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutSuccessUrl("/?logout")
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .headers().frameOptions().disable();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+    // @Bean
+    // public PasswordEncoder passwordEncoder(){
+    //     return new BCryptPasswordEncoder();
+    // }
 
 
-//    @Bean
-//    public static NoOpPasswordEncoder passwordEncoder(){
-//        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-//    }
+   @Bean
+   public static NoOpPasswordEncoder passwordEncoder(){
+       return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+   }
 }
