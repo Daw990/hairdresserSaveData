@@ -7,10 +7,10 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.min.css" >
+    <link rel="stylesheet" type="text/css" th:href="@{css/jquery.datetimepicker.min.css}" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
-    <link rel="stylesheet" type="text/css" href="/css/style.css" >
+    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}" >
     <title>Nożyce w Dłoni: Wizyty</title>
 </head>
 <body>
@@ -53,7 +53,7 @@
         </div>
         <div th:if="${userVisitList.isEmpty()}" class="txt-center">
             nie masz jeszcze żadnych wizyt
-            <a href="/price_list" class="btn btn-info btn-space">zapisz się!</a>
+            <a th:href="@{/price_list}" class="btn btn-info btn-space">zapisz się!</a>
 
         </div>
 
