@@ -31,7 +31,7 @@ public class WebController {
 
     @GetMapping("/contact")
     public String contact() throws MessagingException {
-        //signUpMail.sendConfirmationLinkBySes("Magda9008@gmail.com", "aaa");
+        //signUpMail.sendConfirmationLinkByWp("dawid.990m@gmail.com", "aaa");
         return "webStatic/contact";
     }
 

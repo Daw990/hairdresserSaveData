@@ -66,7 +66,7 @@ public class SignUpServiceImpl implements SignUpService, SecurityContext {
         String token = StringFactory.getRandomString(TOKEN_LENGTH);
 
         user.setConfirmationToken(token);
-        signUpMail.sendConfirmationLink(user.getEmail(), token);
+        signUpMail.sendConfirmationLinkByWp(user.getEmail(), token);
         user.setUserData(userData);
         userRepository.save(user);
         userDataRepository.save(userData);
