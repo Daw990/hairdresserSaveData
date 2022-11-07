@@ -19,41 +19,31 @@
         <hr>
         <div class="main-box">
 
-                <span sec:authentication="name"></span>
-
-            <div class="row">
-                <div class="col-6">Imię: </div>
-                <div class="col" th:text="${user.userData.firstName}"></div>
-            </div>
-
+<!--                <span sec:authentication="name"></span>-->
+            <h3 th:text="${'Witaj ' + user.userData.firstName + '!'}"></h3>
+            <hr>
             <div class="row">
                 <div class="col-6">Nazwisko: </div>
                 <div class="col" th:text="${user.userData.secondName}"></div>
             </div>
-
             <div class="row">
                 <div class="col-6">Numer telefonu: </div>
                 <div class="col" th:text="${user.userData.phoneNumber}"></div>
             </div>
-
             <div class="row userPanelBox space-input justify-content-sm-center">
                 <a sec:authorize="hasAuthority('USER')" th:href="@{/price_list}"
                    class="btn btn-info btn-sm btn-space">
-                    Zaplanuj Wizytę
+                    Zaplanuj Wizytę/Edytuj cennik
                 </a>
                 <a th:href="@{/user/my_visits}"
                    class="btn btn-info btn-space btn-sm">
                     Panel wizyt
                 </a>
+            </div>
+            <div class="row userPanelBox justify-content-sm-center">
                 <a th:href="@{/user/edit_user}"
                    class="btn btn-info btn-space btn-sm">
                     Edytuj konto
-                </a>
-            </div>
-            <div class="row userPanelBox justify-content-sm-center">
-                <a th:href="@{/price_list}" sec:authorize="hasAuthority('BOSS')"
-                   class="btn btn-info btn-space btn-sm">
-                    Edytuj cennik
                 </a>
                 <a th:href="@{/user/give_grants}" sec:authorize="hasAuthority('BOSS')"
                    class="btn btn-info btn-space btn-sm justify-content-sm-center">
