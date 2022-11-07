@@ -48,11 +48,11 @@
                             </option>
                         </select>
 
-                        <a sec:authorize="hasAuthority('ADMIN')" th:unless="${param.clientForm}"
-                           th:href="@{/user/make_visit_date(idPriceList=${priceList.idPriceList},date=${param.date},newClient=true,clientForm=true)}"
-                       class="btn btn-info btn-space">
-                        Dodaj klienta
-                        </a>
+
+
+                        <div class="btn-space">
+                            <button type="submit" class="btn-info">Zapisz!</button>
+                        </div>
                     </div>
 
             <div th:if="${param.clientForm}">
@@ -83,9 +83,11 @@
                 </div>
 
             </div>
-                <div class="center-box space-top">
-                    <button type="submit" class="btn-info">Zapisz!</button>
-                </div>
+                <a sec:authorize="hasAuthority('ADMIN')" th:unless="${param.clientForm}"
+                   th:href="@{/user/make_visit_date(idPriceList=${priceList.idPriceList},date=${param.date},newClient=true,clientForm=true)}"
+                   class="btn btn-info center-box space-top">
+                    Dodaj klienta
+                </a>
             </div>
 
             <div th:if="${hours.isEmpty()}">
@@ -122,7 +124,8 @@
         format: 'Y-m-d',
         value: paramDate,
         disabledWeekDays:[0,6],
-        mask: true
+        mask: true,
+        minDate: 0
 
     })
     $('#toggleDatePicker').on('click', function(){
