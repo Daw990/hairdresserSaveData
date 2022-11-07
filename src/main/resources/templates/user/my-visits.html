@@ -11,11 +11,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" >
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" >
     <title>Nożyce w Dłoni: Wizyty</title>
 </head>
 <body>
 
     <div th:insert="webStatic/menu.html :: nav"></div>
+
+    <div class="success-info" th:if="${param.visitSaved}">
+        <div th:text="${'Klient został zapisany ' + visit.getUser().getUserData().getFirstName() + ' '
+            + visit.getUser().getUserData().getSecondName() + ' na ' + visit.getServiceName() + ' - dnia: '
+            + visit.getVisitDate() + ' o godz: ' + visit.getVisitTime()}"></div>
+    </div>
 
     <div class="container">
     <h3>Moje wizyty</h3>

@@ -1,5 +1,6 @@
 package com.dawid.hairdresserSaveData.services.implementation;
 
+import com.dawid.hairdresserSaveData.entity.UserData;
 import com.dawid.hairdresserSaveData.entity.Visit;
 import com.dawid.hairdresserSaveData.repository.VisitRepository;
 import com.dawid.hairdresserSaveData.services.VisitService;
@@ -8,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class VisitServiceImpl implements VisitService {
@@ -144,5 +142,19 @@ public class VisitServiceImpl implements VisitService {
             }
         });
         return hoursList;
+    }
+
+    @Override
+    public Visit findById(Long visitSaved) {
+        Optional<Visit> result = visitRepository.findById(visitSaved);
+        Visit visit = null;
+
+        if (result.isPresent()) {
+            visit = result.get();
+        }
+        else {
+            throw new RuntimeException("Did not find UserData id - " + visitSaved);
+        }
+        return visit;
     }
 }

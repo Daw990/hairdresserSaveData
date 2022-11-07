@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -123,11 +124,12 @@ public class UserVisitController {
         }
         visitService.save(visit);
 
-        return "redirect:/user/my_visits";
+        return "redirect:/user/my_visits?visitSaved=" + visit.getIdVisit();
     }
 
     @GetMapping(value = "/my_visits")
     public String myVisits(@RequestParam(value = "date", required = false, defaultValue = "2021-01-01") String date,
+                           @RequestParam(value = "visitSaved", required = false) Optional<Long> visitSaved,
                            Model model, Authentication authentication) {
 
         User user = (User) userDetailsService.loadUserByUsername(authentication.getName());
@@ -139,6 +141,11 @@ public class UserVisitController {
         List<Visit> selectedVisits = visitService.findByVisitDate(localDate);
 
         visitService.checkVisitsCanBeDeleteByUser(userVisitList);
+
+        if(visitSaved.isPresent()) {
+            Visit visit = visitService.findById(visitSaved.get());
+            model.addAttribute("visit", visit);
+        }
 
         model.addAttribute("selectedVisits", selectedVisits);
         model.addAttribute("userVisitList", userVisitList);

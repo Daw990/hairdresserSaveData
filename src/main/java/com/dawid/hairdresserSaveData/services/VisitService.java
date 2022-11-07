@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface VisitService {
 
@@ -20,4 +21,5 @@ public interface VisitService {
                                                    int repairTime, java.time.LocalTime startingHourRepair);
     List<LocalTime> getFreeHoursInList(Map<LocalTime, Integer> hoursMap, int repairTime, LocalDate date);
 
+    Visit findById(Long visitSaved);
 }
