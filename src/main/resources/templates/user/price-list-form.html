@@ -26,9 +26,11 @@
             <input type="hidden" th:field="*{idPriceList}"/>
 
             <h2>Dodaj usługę:</h2>
+            <hr>
 
-            <div class="form-group">
-                <select class="form-control" required="required" th:field="*{category}">
+            <div class="form-group row margin-sm-right">
+                <p class="col-3">Kategoria:</p>
+                <select class="form-control col-9" required="required" th:field="*{category}">
                     <option value="" selected hidden>Wybierz Kategorię...</option>
                     <option value="man">Mężczyźni</option>
                     <option value="woman">Kobiety</option>
@@ -37,19 +39,22 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group row margin-sm-right">
+                <p class="col-3">Nazwa:</p>
                 <input type="text" required="required" th:field="*{name}"
-                   class="form-control" placeholder="Nazwa np.: farbowanie">
+                   class="form-control col-9" placeholder="Nazwa np.: farbowanie">
             </div>
 
-            <div class="form-group">
+            <div class="form-group row margin-sm-right">
+                <p class="col-3">Cena:</p>
                 <input type="number" required="required" th:field="*{price}"
-                   class="form-control" placeholder="Podaj cenę usługi">
+                   class="form-control col-9" placeholder="Podaj cenę usługi">
             </div>
 
-            <div class="form-group">
+            <div class="form-group row margin-sm-right">
+                <p class="col-3">Czas:</p>
             <input type="number" required="required" step="20" min="20" value="20" th:field="*{time}"
-                   class="form-control" placeholder="Podaj czas trwania usługi w minutach">
+                   class="form-control col-9" placeholder="Podaj czas trwania usługi w minutach">
             </div>
 
             <div class="form-inline">
