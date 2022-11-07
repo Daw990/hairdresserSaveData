@@ -32,16 +32,16 @@
         <thead class="thead-dark">
         <tr>
             <td><b>Usługa</b></td>
-            <td><b>Czas trwania (min)</b></td>
-            <td><b>Cena (zł)</b></td>
+            <td><b>Czas trwania</b></td>
+            <td><b>Cena</b></td>
         </tr>
         </thead>
         <tbody>
         <td class="table-warning table-categories" colspan="4"><b>Mężczyźni</b></td>
         <tr th:each="service1 : ${listMan}">
             <td th:text="${service1.name}"></td>
-            <td th:text="${service1.time}"></td>
-            <td th:text="${service1.price}"></td>
+            <td th:text="${service1.time} + ' min'"></td>
+            <td th:text="${service1.price} + 'zł'"></td>
 
             <td sec:authorize="hasAuthority('USER')">
 
@@ -66,8 +66,8 @@
 
         <tr th:each="service2 : ${listWoman}">
             <td th:text="${service2.name}"></td>
-            <td th:text="${service2.time}"></td>
-            <td th:text="${service2.price}"></td>
+            <td th:text="${service2.time} + ' min'"></td>
+            <td th:text="${service2.price} + ' zł'"></td>
 
             <td sec:authorize="hasAuthority('USER')">
 
@@ -91,8 +91,8 @@
 
         <tr th:each="service3 : ${listColorization}">
             <td th:text="${service3.name}"></td>
-            <td th:text="${service3.time}"></td>
-            <td th:text="${service3.price}"></td>
+            <td th:text="${service3.time} + ' min'"></td>
+            <td th:text="${service3.price} + ' zł'"></td>
 
             <td sec:authorize="hasAuthority('USER')">
 
@@ -116,8 +116,8 @@
 
         <tr th:each="service4 : ${otherServices}">
             <td th:text="${service4.name}"></td>
-            <td th:text="${service4.time}"></td>
-            <td th:text="${service4.price}"></td>
+            <td th:text="${service4.time} + ' min'"></td>
+            <td th:text="${service4.price} + ' zł'"></td>
 
             <td sec:authorize="hasAuthority('USER')">
 
