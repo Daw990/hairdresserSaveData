@@ -31,7 +31,7 @@
                 <br>
                 nd: Nieczynne
             </span>
-            <div>
+            <div sec:authorize="!isAuthenticated()">
                 <a class="btn btn-info" th:href="@{/sign_up}">Zarejestruj się aby zaplanować wizytę</a>
             </div>
         </div>
