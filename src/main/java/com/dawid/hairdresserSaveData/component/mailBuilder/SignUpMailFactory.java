@@ -10,7 +10,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 @Component
-@PropertySource(value = "file:custom-mail.properties", encoding = "UTF-8") //file on server
+@PropertySource(value = "classpath:custom-mail.properties", encoding = "UTF-8") //file on server
 public class SignUpMailFactory {
 
     @Value("${email.confirmation.mail.smtp.auth}")

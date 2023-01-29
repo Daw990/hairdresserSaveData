@@ -1,6 +1,6 @@
-insert into ROLE (id_role,role) values (1,'USER');
-insert into ROLE (id_role,role) values (2,'ADMIN');
-insert into ROLE (id_role,role) values (3,'BOSS');
+insert into role (id_role,role) values (1,'USER');
+insert into role (id_role,role) values (2,'ADMIN');
+insert into role (id_role,role) values (3,'BOSS');
 
 insert into user_data (id_user_data,first_name,phone_number,second_name) values (1,'boss','223344','boss');
 insert into user (id_user,confirmation_token,email,enabled,password,user_data_id_user_data) values (1,'derwef','boss@boss.pl',true,'1234',1);
@@ -23,6 +23,7 @@ insert into price_list (category,name,price,time) values ('man', 'Strzyżenie z 
 insert into price_list (category,name,price,time) values ('woman', 'Strzyżenie', 50, 60);
 insert into price_list (category,name,price,time) values ('woman', 'Modelowanie', 70, 40);
 insert into price_list (category,name,price,time) values ('woman', 'Polerowanie', 80, 20);
+insert into price_list (category,name,price,time) values ('woman', 'Strzyżenie kręconych włosów', 80, 20);
 
 insert into price_list (category,name,price,time) values ('colorization', 'Farbowanie całość lub odrosty', 120, 100);
 insert into price_list (category,name,price,time) values ('colorization', 'Farbowanie 2 i więcej kolorów', 150, 160);

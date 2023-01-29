@@ -25,12 +25,10 @@ public class PriceListServiceImpl implements PriceListService {
         Optional<PriceList> result = priceListRepository.findById(id);
         PriceList priceList = null;
 
-        if (result.isPresent()) {
-            priceList = result.get();
-        }
-        else {
+        if (result.isEmpty())
             throw new RuntimeException("Did not find PriceList id - " + id);
-        }
+
+        priceList = result.get();
         return priceList;
     }
 
