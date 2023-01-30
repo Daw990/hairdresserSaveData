@@ -17,19 +17,18 @@
 <div class="container">
     <div class="row contact-bg">
          <div class="col-md-6 col-xl-6">
-             <img th:src="@{images/logo2.png}" class="img-fluid" style="max-width">
+             <img th:src="@{images/logo2.png}" class="img-fluid">
          </div>
         <div class="col-md-6 col-xl-6 contact-info">
+            <span style="font-size: large; font-weight: bold;">Salon Fryzjerski</span>
+            <br>
+            <span style="font-size: large; font-weight: bold;">"Nożyce w dłoni"</span>
+            <br>
             <span>
-                ul. Fryzjerska 30
+                ul. Fryzjerska 30, 33-222
                 <br>
-                Godziny otwarcia:
+                <a href="tel:111-222-333" class="btn btn-warning" style="font-weight: bold; color:white; margin-top: 10px; margin-bottom: 10px;">tel: 111-222-333</a>
                 <br>
-                pn – pt: 8.00 – 16.00
-                <br>
-                sb: Nieczynne
-                <br>
-                nd: Nieczynne
             </span>
             <div sec:authorize="!isAuthenticated()">
                 <a class="btn btn-info" th:href="@{/sign_up}">Zarejestruj się aby zaplanować wizytę</a>
